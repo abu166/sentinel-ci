@@ -1,0 +1,1 @@
+ALTER TABLE healing_patches ADD COLUMN IF NOT EXISTS diagnostics JSONB NOT NULL DEFAULT '{}';
