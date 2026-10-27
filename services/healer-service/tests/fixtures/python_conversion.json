@@ -1,0 +1,10 @@
+{
+  "language": "python",
+  "logs": "TypeError: str",
+  "files": {
+    "app.py": "def label(value):\n    return \"Count: \" + value\n",
+    "test_app.py": "from app import *\nimport unittest\nclass RegressionTests(unittest.TestCase):\n    def test_regression(self):\n        assert label(3) == \"Count: 3\"\n\nif __name__ == \"__main__\":\n    unittest.main()\n"
+  },
+  "test_command": "python3 -m unittest -v test_app",
+  "timeout_seconds": 120
+}

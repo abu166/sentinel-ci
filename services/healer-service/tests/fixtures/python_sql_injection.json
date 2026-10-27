@@ -1,0 +1,10 @@
+{
+  "logs": "FAIL: test_injected_predicate_cannot_select_other_users: SQL injection selected unauthorized users",
+  "language": "python",
+  "files": {
+    "users.py": "import sqlite3\n\ndef find_user(db, name):\n    return db.execute(\"SELECT id FROM users WHERE name = '\" + name + \"'\").fetchall()\n",
+    "test_users.py": "import sqlite3\nimport unittest\nfrom users import find_user\n\nclass QuerySecurityTests(unittest.TestCase):\n    def setUp(self):\n        self.db = sqlite3.connect(\":memory:\")\n        self.db.execute(\"CREATE TABLE users (id INTEGER PRIMARY KEY, name TEXT)\")\n        self.db.executemany(\"INSERT INTO users (id,name) VALUES (?,?)\", [(1,\"alice\"),(2,\"bob\"),(3,\"O'Reilly\")])\n    def tearDown(self):\n        self.db.close()\n    def test_legitimate_name(self):\n        self.assertEqual(find_user(self.db, \"alice\"), [(1,)])\n    def test_unknown_name(self):\n        self.assertEqual(find_user(self.db, \"nobody\"), [])\n    def test_quote_in_legitimate_name(self):\n        self.assertEqual(find_user(self.db, \"O'Reilly\"), [(3,)])\n    def test_injected_predicate_cannot_select_other_users(self):\n        self.assertEqual(find_user(self.db, \"' OR 1=1 --\"), [])\n    def test_injection_cannot_drop_users(self):\n        try:\n            find_user(self.db, \"'; DROP TABLE users; --\")\n        except sqlite3.Error:\n            self.fail(\"input must be bound as data, not parsed as SQL\")\n        self.assertEqual(self.db.execute(\"SELECT COUNT(*) FROM users\").fetchone()[0], 3)\n"
+  },
+  "test_command": "python3 -m unittest -v test_users",
+  "regression_command": "python3 -m unittest discover -v"
+}

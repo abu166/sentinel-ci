@@ -1,0 +1,11 @@
+{
+  "language": "go",
+  "logs": "panic: index out of range",
+  "files": {
+    "app.go": "package repair\nfunc Last(items []int) int { return items[len(items)] }\n",
+    "app_test.go": "package repair\nimport \"testing\"\nfunc TestLast(t *testing.T) { if Last([]int{1,2}) != 2 { t.Fatal(\"last\") } }\n",
+    "go.mod": "module repair\ngo 1.23\n"
+  },
+  "test_command": "go test ./...",
+  "timeout_seconds": 120
+}

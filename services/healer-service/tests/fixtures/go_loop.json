@@ -1,0 +1,11 @@
+{
+  "language": "go",
+  "logs": "panic: index out of range",
+  "files": {
+    "app.go": "package repair\nfunc Total(items []int) int { result := 0; for i := 0; i <= len(items); i++ { result += items[i] }; return result }\n",
+    "app_test.go": "package repair\nimport \"testing\"\nfunc TestTotal(t *testing.T) { if Total([]int{1,2}) != 3 { t.Fatal(\"total\") } }\n",
+    "go.mod": "module repair\ngo 1.23\n"
+  },
+  "test_command": "go test ./...",
+  "timeout_seconds": 120
+}

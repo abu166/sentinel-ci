@@ -1,0 +1,11 @@
+{
+  "language": "go",
+  "logs": "panic: nil pointer dereference",
+  "files": {
+    "app.go": "package repair\ntype User struct { Count int }\nfunc Count(user *User) int { return user.Count }\n",
+    "app_test.go": "package repair\nimport \"testing\"\nfunc TestCount(t *testing.T) { if Count(nil) != 0 { t.Fatal(\"nil\") } }\n",
+    "go.mod": "module repair\ngo 1.23\n"
+  },
+  "test_command": "go test ./...",
+  "timeout_seconds": 120
+}
