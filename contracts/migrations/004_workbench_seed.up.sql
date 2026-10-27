@@ -1,0 +1,14 @@
+UPDATE repositories SET name='payment-gateway' WHERE id='f6cff0f4-220e-596d-8ca4-342b6474c316';
+UPDATE repositories SET name='order-matching-engine' WHERE id='6bb49970-0c92-5ca8-979a-dff53909f7d8';
+UPDATE repositories SET name='auth-proxy' WHERE id='b3e605e5-4cbe-5782-91f1-e1ff59229aea';
+INSERT INTO repositories(id,name,repo_url,default_branch) VALUES('dcd92a03-dc5d-5352-ad44-a0db3334457a','telemetry-ingestor','https://github.com/sentinel-labs/telemetry-ingestor','main') ON CONFLICT DO NOTHING;
+UPDATE pipelines SET commit_sha=md5(id::text) WHERE commit_sha !~ '^[0-9a-f]{7,40}$';
+UPDATE pipelines SET branch=regexp_replace(branch,'^demo/','reproduce/') WHERE branch LIKE 'demo/%';
+UPDATE pipelines SET commit_message='feat(billing): parallelize invoice batch processor' WHERE commit_message='' AND mod(abs(hashtext(id::text)::bigint),5)=0;
+UPDATE pipelines SET commit_message='fix(cache): shard LRU eviction lock' WHERE commit_message='' AND mod(abs(hashtext(id::text)::bigint),5)=1;
+UPDATE pipelines SET commit_message='refactor(auth): propagate request cancellation' WHERE commit_message='' AND mod(abs(hashtext(id::text)::bigint),5)=2;
+UPDATE pipelines SET commit_message='feat(telemetry): accept sparse worker events' WHERE commit_message='' AND mod(abs(hashtext(id::text)::bigint),5)=3;
+UPDATE pipelines SET commit_message='fix(inventory): cap final warehouse batch' WHERE commit_message='' AND mod(abs(hashtext(id::text)::bigint),5)=4;
+UPDATE pipelines SET triggered_by=(ARRAY['abukhasym','s.kassymov','ci-bot'])[1+mod(abs(hashtext(id::text)::bigint),3)] WHERE triggered_by IN ('seed-demo','console');
+UPDATE job_snapshots j SET payload=jsonb_set(jsonb_set(j.payload,'{commit_sha}',to_jsonb(p.commit_sha)),'{commit_message}',to_jsonb(p.commit_message)) FROM pipelines p WHERE j.pipeline_id=p.id;
+UPDATE pipeline_steps SET started_at=p.started_at,finished_at=p.started_at + duration_ms * interval '1 millisecond' FROM pipelines p WHERE pipeline_steps.pipeline_id=p.id AND pipeline_steps.duration_ms IS NOT NULL AND pipeline_steps.started_at IS NULL;
