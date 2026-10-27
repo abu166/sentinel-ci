@@ -1,0 +1,12 @@
+node_modules/
+dist/
+__pycache__/
+.pytest_cache/
+.coverage
+htmlcov/
+.venv/
+*.log
+.env
+coverage.out
+*.test
+.DS_Store
