@@ -1,0 +1,163 @@
+name: sentinel-ci
+services:
+  jaeger:
+    build:
+      context: .
+      dockerfile: jaeger.Dockerfile
+    ports: ["16686:16686"]
+    mem_limit: 512m
+    cpus: 1
+    restart: unless-stopped
+  postgres:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_USER: sentinel
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-sentinel}
+      POSTGRES_DB: sentinel
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+      - ../contracts/migrations:/docker-entrypoint-initdb.d:ro
+    healthcheck:
+      test: [CMD-SHELL, "pg_isready -U sentinel -d sentinel"]
+      interval: 5s
+      timeout: 3s
+      retries: 20
+  redis:
+    image: redis:7-alpine
+    command: [redis-server, --appendonly, "yes"]
+    volumes: [redis-data:/data]
+    healthcheck:
+      test: [CMD, redis-cli, ping]
+      interval: 5s
+      timeout: 3s
+      retries: 20
+  rabbitmq:
+    image: rabbitmq:3.13-management-alpine
+    environment:
+      RABBITMQ_DEFAULT_USER: sentinel
+      RABBITMQ_DEFAULT_PASS: ${RABBITMQ_PASSWORD:-sentinel}
+    volumes: [rabbit-data:/var/lib/rabbitmq]
+    healthcheck:
+      test: [CMD, rabbitmq-diagnostics, -q, check_port_connectivity]
+      interval: 5s
+      timeout: 5s
+      retries: 30
+  migrate:
+    image: postgres:16-alpine
+    entrypoint: [sh, /deploy/migrate.sh]
+    environment:
+      DATABASE_URL: postgres://sentinel:${POSTGRES_PASSWORD:-sentinel}@postgres:5432/sentinel?sslmode=disable
+    volumes:
+      - ./migrate.sh:/deploy/migrate.sh:ro
+      - ../contracts/migrations:/migrations:ro
+    depends_on:
+      postgres: {condition: service_healthy}
+  sandbox-image:
+    image: sentinel-sandbox:local
+    build:
+      context: .
+      dockerfile: sandbox.Dockerfile
+    entrypoint: [sh, -c, "exit 0"]
+  gateway-api:
+    build: ../services/gateway-api
+    environment: &backend-env
+      DATABASE_URL: postgres://sentinel:${POSTGRES_PASSWORD:-sentinel}@postgres:5432/sentinel?sslmode=disable
+      REDIS_URL: redis://redis:6379/0
+      RABBITMQ_URL: amqp://sentinel:${RABBITMQ_PASSWORD:-sentinel}@rabbitmq:5672/
+      CONSOLE_ORIGIN: http://localhost:3000
+      JWT_SECRET: ${JWT_SECRET:-sentinel-local-jwt-secret-change-before-exposing-2026}
+      ADMIN_USERNAME: ${ADMIN_USERNAME:-admin}
+      ADMIN_PASSWORD: ${ADMIN_PASSWORD:-sentinel-local-admin-password}
+      SENTINEL_DEMO_MODE: ${SENTINEL_DEMO_MODE:-true}
+      INTERNAL_TOKEN: ${INTERNAL_TOKEN:-sentinel-local-internal-token-change-before-exposing}
+      HEALER_URL: http://healer-service:8081
+      OTEL_EXPORTER_OTLP_ENDPOINT: http://jaeger:4318
+      OTEL_EXPORTER_OTLP_PROTOCOL: http/protobuf
+      OTEL_SERVICE_NAME: sentinel-gateway
+    ports: ["8080:8080"]
+    depends_on:
+      jaeger: {condition: service_healthy}
+      postgres: {condition: service_healthy}
+      migrate: {condition: service_completed_successfully}
+      redis: {condition: service_healthy}
+      rabbitmq: {condition: service_healthy}
+    healthcheck:
+      test: [CMD, wget, -q, -O, /dev/null, http://localhost:8080/api/v1/health]
+      start_period: 30s
+      interval: 10s
+      timeout: 5s
+      retries: 15
+    restart: unless-stopped
+  runner-daemon:
+    build: ../services/runner-daemon
+    environment:
+      <<: *backend-env
+      WORKER_CONCURRENCY: "4"
+      STEP_TIMEOUT: "3m"
+      SANDBOX_MODE: docker
+      SANDBOX_IMAGE: sentinel-sandbox:local
+      SANDBOX_NETWORK: none
+      RUNNER_NODE_ID: runner-primary
+      OTEL_SERVICE_NAME: sentinel-runner
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    depends_on:
+      gateway-api: {condition: service_healthy}
+      sandbox-image: {condition: service_completed_successfully}
+    healthcheck:
+      test: [CMD, runner, healthcheck]
+      interval: 10s
+      timeout: 5s
+      start_period: 15s
+      retries: 3
+    init: true
+    pids_limit: 256
+    mem_limit: 1g
+    cpus: 2
+    restart: unless-stopped
+  healer-service:
+    build: ../services/healer-service
+    environment:
+      <<: *backend-env
+      LLM_API_KEY: ${LLM_API_KEY:-}
+      GITHUB_TOKEN: ${GITHUB_TOKEN:-}
+      GITLAB_TOKEN: ${GITLAB_TOKEN:-}
+      GITLAB_HOST: ${GITLAB_HOST:-gitlab.com}
+      SANDBOX_MODE: docker
+      SANDBOX_IMAGE: sentinel-sandbox:local
+      GIT_STORE_PATH: /data/git
+      OTEL_SERVICE_NAME: sentinel-healer
+      HEALER_CANDIDATE_CONCURRENCY: "3"
+    user: "0:0"
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - git-data:/data/git
+    depends_on:
+      gateway-api: {condition: service_healthy}
+      sandbox-image: {condition: service_completed_successfully}
+    healthcheck:
+      test: [CMD, python, -c, "import urllib.request; urllib.request.urlopen('http://localhost:8081/api/v1/health',timeout=3)"]
+      interval: 10s
+      timeout: 5s
+      retries: 15
+    init: true
+    pids_limit: 256
+    mem_limit: 1g
+    cpus: 2
+    restart: unless-stopped
+  web-console:
+    build: ../web-console
+    ports: ["3000:3000"]
+    depends_on:
+      gateway-api: {condition: service_healthy}
+    healthcheck:
+      test: [CMD, wget, -q, -O, /dev/null, http://127.0.0.1:3000/]
+      interval: 10s
+      timeout: 3s
+      retries: 10
+    restart: unless-stopped
+volumes:
+  postgres-data:
+  redis-data:
+  rabbit-data:
+  git-data:
