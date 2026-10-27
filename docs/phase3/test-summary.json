@@ -1,0 +1,27 @@
+{
+  "result": "passed",
+  "gateway": {
+    "command": "go test -v -race ./...",
+    "top_level_tests": 77,
+    "vet": "passed"
+  },
+  "runner": {
+    "command": "go test -race ./...",
+    "top_level_tests": 60,
+    "vet": "passed"
+  },
+  "healer": {
+    "command": "pytest -v --cov",
+    "tests": 164,
+    "coverage_percent": 96,
+    "duration_seconds": 231.26
+  },
+  "frontend": {
+    "command": "npm test -- --run",
+    "tests": 82,
+    "build": "passed",
+    "typescript": "passed",
+    "javascript_asset": "index-xQ6V0W_o.js",
+    "css_asset": "index-agktfe6i.css"
+  }
+}

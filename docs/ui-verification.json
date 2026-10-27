@@ -1,0 +1,269 @@
+{
+  "measured_at": "2026-10-27T10:01:13.349Z",
+  "browser": "Chrome/156.0.8078.4",
+  "command": "node e2e/browser-ui-redesign.mjs --zero-shifts",
+  "definition": "Sum of document-start layout-shift entries excluding hadRecentInput, through authentication, fonts, hydration, and the settle window; not a whole-session or all-network-conditions guarantee.",
+  "result": "PASS",
+  "frontend_tests": 50,
+  "routes": [
+    {
+      "path": "/overview",
+      "viewport": {
+        "width": 1440,
+        "height": 1000
+      },
+      "cumulative_layout_shift": 0,
+      "window_ms": 10157,
+      "live": true
+    },
+    {
+      "path": "/pipelines",
+      "viewport": {
+        "width": 1440,
+        "height": 1000
+      },
+      "cumulative_layout_shift": 0,
+      "window_ms": 10121.89999999851,
+      "live": true
+    },
+    {
+      "path": "/repositories",
+      "viewport": {
+        "width": 1440,
+        "height": 1000
+      },
+      "cumulative_layout_shift": 0,
+      "window_ms": 10131,
+      "live": true
+    },
+    {
+      "path": "/healing-studio",
+      "viewport": {
+        "width": 1440,
+        "height": 1000
+      },
+      "cumulative_layout_shift": 0,
+      "window_ms": 10136,
+      "live": true
+    },
+    {
+      "path": "/workers",
+      "viewport": {
+        "width": 1440,
+        "height": 1000
+      },
+      "cumulative_layout_shift": 0,
+      "window_ms": 10131.29999999702,
+      "live": true
+    },
+    {
+      "path": "/queue",
+      "viewport": {
+        "width": 1440,
+        "height": 1000
+      },
+      "cumulative_layout_shift": 0,
+      "window_ms": 10131.89999999851,
+      "live": true
+    },
+    {
+      "path": "/overview",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "cumulative_layout_shift": 0,
+      "window_ms": 10130.099999997765,
+      "live": true
+    },
+    {
+      "path": "/pipelines",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "cumulative_layout_shift": 0,
+      "window_ms": 10158.199999999255,
+      "live": true
+    },
+    {
+      "path": "/repositories",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "cumulative_layout_shift": 0,
+      "window_ms": 10143,
+      "live": true
+    },
+    {
+      "path": "/healing-studio",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "cumulative_layout_shift": 0,
+      "window_ms": 10127.89999999851,
+      "live": true
+    },
+    {
+      "path": "/workers",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "cumulative_layout_shift": 0,
+      "window_ms": 10129.10000000149,
+      "live": true
+    },
+    {
+      "path": "/queue",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "cumulative_layout_shift": 0,
+      "window_ms": 10119.39999999851,
+      "live": true
+    }
+  ],
+  "font_faces": [
+    {
+      "family": "Inter",
+      "status": "loaded",
+      "weight": "400"
+    },
+    {
+      "family": "Inter",
+      "status": "loaded",
+      "weight": "500"
+    },
+    {
+      "family": "Inter",
+      "status": "loaded",
+      "weight": "600"
+    },
+    {
+      "family": "JetBrains Mono",
+      "status": "loaded",
+      "weight": "400"
+    },
+    {
+      "family": "JetBrains Mono",
+      "status": "loaded",
+      "weight": "500"
+    }
+  ],
+  "font_requests": [
+    {
+      "path": "/assets/inter-latin-500-normal-Cerq10X2.woff2",
+      "status": 200,
+      "local": true
+    },
+    {
+      "path": "/assets/inter-latin-400-normal-C38fXH4l.woff2",
+      "status": 200,
+      "local": true
+    },
+    {
+      "path": "/assets/inter-latin-600-normal-LgqL8muc.woff2",
+      "status": 200,
+      "local": true
+    },
+    {
+      "path": "/assets/jetbrains-mono-latin-400-normal-V6pRDFza.woff2",
+      "status": 200,
+      "local": true
+    },
+    {
+      "path": "/assets/jetbrains-mono-latin-500-normal-BWZEU5yA.woff2",
+      "status": 200,
+      "local": true
+    }
+  ],
+  "javascript_errors": 0,
+  "http_errors": 0,
+  "websocket_handshakes": 19,
+  "interactions": {
+    "sidebar": {
+      "expandedWidth": 240,
+      "collapsedWidth": 64
+    },
+    "palette": {
+      "fuzzyQuery": "wrk nd",
+      "navigatedTo": "/workers",
+      "grouped": true,
+      "tabWrap": true,
+      "shiftTabWrap": true,
+      "escapeRestoresLauncher": true
+    },
+    "profile": {
+      "viewerMutationDisabled": true,
+      "adminRestored": true,
+      "escapeRestoresFocus": true,
+      "outsideDismisses": true,
+      "outsidePoint": {
+        "x": 720,
+        "y": 400,
+        "hitClass": "menu-dismiss"
+      }
+    },
+    "terminal": {
+      "filteredRows": 32,
+      "textFilterRows": 1,
+      "autoScrollToggle": true,
+      "clipboardLength": 1591,
+      "clipboardSHA256": "da233e10e667610b49647eda7a60e383d8ee2e504f94ac6c9540b2dd2ea3e938"
+    },
+    "diff": {
+      "unified": true,
+      "split": true
+    },
+    "repository": {
+      "generatedSecretLength": 64,
+      "saved": false
+    },
+    "matrix": {
+      "statusFilter": true,
+      "drawerOpenClose": true
+    },
+    "mobile": {
+      "documentWidth": 390,
+      "viewport": 390,
+      "scrollports": [
+        {
+          "class": "telemetry-ribbon",
+          "clientWidth": 326,
+          "scrollWidth": 570,
+          "scrollLeft": 100
+        },
+        {
+          "class": "filters",
+          "clientWidth": 326,
+          "scrollWidth": 584,
+          "scrollLeft": 100
+        },
+        {
+          "class": "status-filter-pills",
+          "clientWidth": 326,
+          "scrollWidth": 512,
+          "scrollLeft": 100
+        },
+        {
+          "class": "matrix-scroll",
+          "clientWidth": 320,
+          "scrollWidth": 1070,
+          "scrollLeft": 100
+        }
+      ]
+    }
+  },
+  "conditions": {
+    "cacheDisabled": true,
+    "networkThrottling": false,
+    "cpuThrottling": false,
+    "headless": true,
+    "platform": "darwin"
+  },
+  "maximum_allowed_layout_shift": 0
+}

@@ -1,0 +1,76 @@
+{
+  "result": "passed",
+  "recorded_at": "2026-10-27T10:45:30.224391+00:00",
+  "services": [
+    {
+      "Service": "gateway-api",
+      "State": "running",
+      "Health": "healthy",
+      "ExitCode": 0,
+      "Status": "Up 19 minutes (healthy)"
+    },
+    {
+      "Service": "healer-service",
+      "State": "running",
+      "Health": "healthy",
+      "ExitCode": 0,
+      "Status": "Up 3 minutes (healthy)"
+    },
+    {
+      "Service": "jaeger",
+      "State": "running",
+      "Health": "healthy",
+      "ExitCode": 0,
+      "Status": "Up 20 minutes (healthy)"
+    },
+    {
+      "Service": "migrate",
+      "State": "exited",
+      "Health": "",
+      "ExitCode": 0,
+      "Status": "Exited (0) 20 minutes ago"
+    },
+    {
+      "Service": "postgres",
+      "State": "running",
+      "Health": "healthy",
+      "ExitCode": 0,
+      "Status": "Up 3 hours (healthy)"
+    },
+    {
+      "Service": "rabbitmq",
+      "State": "running",
+      "Health": "healthy",
+      "ExitCode": 0,
+      "Status": "Up 3 hours (healthy)"
+    },
+    {
+      "Service": "redis",
+      "State": "running",
+      "Health": "healthy",
+      "ExitCode": 0,
+      "Status": "Up 3 hours (healthy)"
+    },
+    {
+      "Service": "runner-daemon",
+      "State": "running",
+      "Health": "healthy",
+      "ExitCode": 0,
+      "Status": "Up 20 minutes (healthy)"
+    },
+    {
+      "Service": "sandbox-image",
+      "State": "exited",
+      "Health": "",
+      "ExitCode": 0,
+      "Status": "Exited (0) 20 minutes ago"
+    },
+    {
+      "Service": "web-console",
+      "State": "running",
+      "Health": "healthy",
+      "ExitCode": 0,
+      "Status": "Up 2 minutes (healthy)"
+    }
+  ]
+}

@@ -1,0 +1,8 @@
+{
+  "result": "passed",
+  "patch_id": "54d420e8-2e7e-5dfd-83aa-3fcf0c3170bb",
+  "status": "LOCAL",
+  "branch": "sentinel/fix-nil-guard-39878f9",
+  "commit_sha": "624ec5e02c6afe1ea31a26edb0307d0c4fd87f37",
+  "behavior": "Resumed abandoned baseline-only branch and preserved exact approved source bytes; reviewed commits are never overwritten."
+}

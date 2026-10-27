@@ -1,0 +1,54 @@
+{
+  "result": "passed",
+  "pipeline_id": "bcdd4778-4043-4664-beeb-887eed8872b3",
+  "patch_id": "e496adb1-8542-5d64-9ce4-812b90ca7999",
+  "trace_id": "88d43910d8a3a06598e2638112f495e7",
+  "services": [
+    "sentinel-gateway",
+    "sentinel-healer",
+    "sentinel-runner"
+  ],
+  "operations": [
+    "POST /api/v1/pipelines/{id}/simulate-failure",
+    "consume healer.result",
+    "healer.candidate.select",
+    "healer.candidate.verify",
+    "healer.consume",
+    "healer.repair",
+    "healer.sandbox.run",
+    "outbox.relay healer.result",
+    "outbox.relay healer.trigger",
+    "outbox.relay jobs.dispatch",
+    "pipeline execute",
+    "publish healer.result",
+    "publish healer.trigger",
+    "publish jobs.dispatch",
+    "rabbitmq consume jobs.dispatch",
+    "rabbitmq publish logs.stream",
+    "step execute"
+  ],
+  "span_count": 60,
+  "internal_parent_links": 59,
+  "candidates": [
+    {
+      "id": "00e35f70-d5fa-52ec-ae5b-1f2091fd52f9",
+      "variant": "deterministic",
+      "ast_cost": 4,
+      "status": "VERIFIED"
+    },
+    {
+      "id": "4483c0de-ed65-5370-b749-03124ccce262",
+      "variant": "negative-index",
+      "ast_cost": 5,
+      "status": "VERIFIED"
+    },
+    {
+      "id": "d29687d9-7b2e-5246-85f0-d4896206079e",
+      "variant": "guarded-last-element",
+      "ast_cost": 9,
+      "status": "VERIFIED"
+    }
+  ],
+  "alternate_selected": "4483c0de-ed65-5370-b749-03124ccce262",
+  "approval_status": "PENDING"
+}

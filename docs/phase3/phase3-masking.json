@@ -1,0 +1,12 @@
+{
+  "result": "passed",
+  "pipeline_id": "5dcced69-d1a9-4f93-b65e-1b1ddd628509",
+  "persisted_lines": 16,
+  "ws_lines": 16,
+  "secret_values_tested": 11,
+  "channels": [
+    "PostgreSQL log_chunks",
+    "Redis-backed authenticated WebSocket"
+  ],
+  "scope": "Output only; source snapshots intentionally retain executable source"
+}

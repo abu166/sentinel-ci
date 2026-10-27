@@ -1,0 +1,13 @@
+{
+  "result": "passed",
+  "healer_candidates_checked": 3,
+  "pipeline_id": "97ccc9e8-e335-4f16-a45f-0b4cca0a66c5",
+  "persisted_lines": 35,
+  "ws_lines": 36,
+  "secret_values_tested": 11,
+  "channels": [
+    "PostgreSQL log_chunks",
+    "Redis-backed authenticated WebSocket"
+  ],
+  "scope": "Output only; source snapshots intentionally retain executable source"
+}

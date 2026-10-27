@@ -1,0 +1,13 @@
+{
+  "result": "passed",
+  "duration_seconds": 20.06,
+  "health_clients": 8,
+  "health_requests": 1026,
+  "health_errors": 0,
+  "p50_ms": 41.29,
+  "p95_ms": 106.93,
+  "docker_samples": 51,
+  "peak_candidate_containers": 1,
+  "isolated_containers_inspected": 1,
+  "limits": "Local unthrottled load; peak sampling is observational, code/unit tests enforce global semaphore"
+}

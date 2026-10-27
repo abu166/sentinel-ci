@@ -1,0 +1,191 @@
+{
+  "mode": "interactions-only",
+  "base": "http://localhost:3000",
+  "measuredAt": "2026-10-27T10:36:06.785Z",
+  "settleWindowMS": 10000,
+  "maxAllowedLayoutShift": 0.1,
+  "conditions": {
+    "cacheDisabled": true,
+    "networkThrottling": false,
+    "cpuThrottling": false,
+    "headless": true,
+    "platform": "darwin"
+  },
+  "layoutShiftDefinition": "Sum of document-start layout-shift entries excluding hadRecentInput, through authentication, fonts, hydration, and the settle window; not a whole-session or all-network-conditions guarantee.",
+  "routes": [],
+  "interactions": {
+    "sidebar": {
+      "expandedWidth": 240,
+      "collapsedWidth": 64
+    },
+    "palette": {
+      "fuzzyQuery": "wrk nd",
+      "navigatedTo": "/workers",
+      "grouped": true,
+      "tabWrap": true,
+      "shiftTabWrap": true,
+      "escapeRestoresLauncher": true
+    },
+    "profile": {
+      "viewerMutationDisabled": true,
+      "adminRestored": true,
+      "escapeRestoresFocus": true,
+      "outsideDismisses": true,
+      "outsidePoint": {
+        "x": 720,
+        "y": 400,
+        "hitClass": "menu-dismiss"
+      }
+    },
+    "terminal": {
+      "filteredRows": 32,
+      "textFilterRows": 1,
+      "autoScrollToggle": true,
+      "clipboardLength": 1535,
+      "clipboardSHA256": "c7aacdd72b6d9319db13dca8f9020d5c68d338dca0b05ea2e5b5aead93b62a43"
+    },
+    "diff": {
+      "unified": true,
+      "split": true
+    },
+    "phase3": {
+      "parserNodes": 2,
+      "parserEdges": 1,
+      "parserProvenance": "Python ast",
+      "candidates": 3,
+      "selectionRefreshed": true,
+      "zoom": true,
+      "actualSamples": 2,
+      "canvases": [
+        {
+          "label": "2254910dcf63 controller_host CPU history",
+          "width": 547,
+          "height": 68,
+          "hasPaint": true
+        },
+        {
+          "label": "2254910dcf63 controller_host memory history",
+          "width": 548,
+          "height": 68,
+          "hasPaint": true
+        }
+      ]
+    },
+    "repository": {
+      "generatedSecretLength": 64,
+      "saved": false
+    },
+    "matrix": {
+      "statusFilter": true,
+      "drawerOpenClose": true
+    },
+    "mobile": {
+      "documentWidth": 390,
+      "viewport": 390,
+      "scrollports": [
+        {
+          "class": "telemetry-ribbon",
+          "clientWidth": 326,
+          "scrollWidth": 570,
+          "scrollLeft": 100
+        },
+        {
+          "class": "filters",
+          "clientWidth": 326,
+          "scrollWidth": 584,
+          "scrollLeft": 100
+        },
+        {
+          "class": "status-filter-pills",
+          "clientWidth": 326,
+          "scrollWidth": 512,
+          "scrollLeft": 100
+        },
+        {
+          "class": "matrix-scroll",
+          "clientWidth": 320,
+          "scrollWidth": 1070,
+          "scrollLeft": 100
+        }
+      ]
+    }
+  },
+  "screenshots": [
+    "sidebar-collapsed.png",
+    "studio-interactions.png",
+    "phase3-ast.png",
+    "phase3-studio.png",
+    "phase3-workers.png",
+    "matrix-inspector.png",
+    "mobile-matrix.png"
+  ],
+  "exceptions": [],
+  "httpErrors": [],
+  "webSocketHandshakes": [
+    {
+      "path": "/ws/pipelines/c4e5ec1c-52f5-488f-99fa-a60cd7313f7c/logs",
+      "status": 101
+    },
+    {
+      "path": "/ws/pipelines/c4e5ec1c-52f5-488f-99fa-a60cd7313f7c/logs",
+      "status": 101
+    },
+    {
+      "path": "/ws/pipelines/c4e5ec1c-52f5-488f-99fa-a60cd7313f7c/logs",
+      "status": 101
+    },
+    {
+      "path": "/ws/pipelines/c4e5ec1c-52f5-488f-99fa-a60cd7313f7c/logs",
+      "status": 101
+    },
+    {
+      "path": "/ws/pipelines/83fa69d9-1873-4553-994a-ab729a4e3607/logs",
+      "status": 101
+    },
+    {
+      "path": "/ws/pipelines/c4e5ec1c-52f5-488f-99fa-a60cd7313f7c/logs",
+      "status": 101
+    },
+    {
+      "path": "/ws/pipelines/c4e5ec1c-52f5-488f-99fa-a60cd7313f7c/logs",
+      "status": 101
+    },
+    {
+      "path": "/ws/pipelines/c4e5ec1c-52f5-488f-99fa-a60cd7313f7c/logs",
+      "status": 101
+    },
+    {
+      "path": "/ws/pipelines/83fa69d9-1873-4553-994a-ab729a4e3607/logs",
+      "status": 101
+    }
+  ],
+  "browserVersion": "Chrome/156.0.8078.4",
+  "fontRequests": [
+    {
+      "path": "/assets/inter-latin-400-normal-C38fXH4l.woff2",
+      "status": 200,
+      "local": true
+    },
+    {
+      "path": "/assets/inter-latin-500-normal-Cerq10X2.woff2",
+      "status": 200,
+      "local": true
+    },
+    {
+      "path": "/assets/jetbrains-mono-latin-400-normal-V6pRDFza.woff2",
+      "status": 200,
+      "local": true
+    },
+    {
+      "path": "/assets/jetbrains-mono-latin-500-normal-BWZEU5yA.woff2",
+      "status": 200,
+      "local": true
+    },
+    {
+      "path": "/assets/inter-latin-600-normal-LgqL8muc.woff2",
+      "status": 200,
+      "local": true
+    }
+  ],
+  "result": "PASS"
+}

@@ -1,0 +1,60 @@
+{
+  "result": "passed",
+  "scenarios": [
+    {
+      "scenario": "nil-pointer",
+      "pipeline_id": "fb42b238-b6c6-455e-8d20-5b6fc0faeac1",
+      "patch_id": "5f5d41ca-2b93-5d73-b5dd-81fe93d99721",
+      "rerun_id": "a7dc0dde-eab2-445e-aacd-aac4ba315041",
+      "rerun_status": "PASSED",
+      "pull_id": "84262892-2b52-498a-8470-670daae01e4f",
+      "git_commit": "aef112e05c8ab024f9c3c65e7d13c5a75e4c6331",
+      "publication_status": "LOCAL",
+      "elapsed_seconds": 103.49
+    },
+    {
+      "scenario": "off-by-one",
+      "pipeline_id": "76b95c61-26e2-4109-8d85-d9854a7b6371",
+      "patch_id": "f94895f3-d695-55ed-bd71-d88d1507cae4",
+      "rerun_id": "3fd7fb4d-a176-4e22-9e4b-e0fb3a53786c",
+      "rerun_status": "PASSED",
+      "pull_id": "18d633f9-ccb1-43ae-a423-2423be77f37b",
+      "git_commit": "2f38c7787778cf5b94810a9881540fdf48eeb406",
+      "publication_status": "LOCAL",
+      "elapsed_seconds": 8.16
+    },
+    {
+      "scenario": "data-race",
+      "pipeline_id": "2d7ef2d8-6ae7-48b1-a469-60658ca41c7e",
+      "patch_id": "65e113bd-ab74-5df6-af84-5d5f48b5c4c7",
+      "rerun_id": "c4e5ec1c-52f5-488f-99fa-a60cd7313f7c",
+      "rerun_status": "PASSED",
+      "pull_id": "6dceb79e-cbe4-4d32-a110-1edeb1fa6054",
+      "git_commit": "72f68b57c67b5b329a807a909cbc03f1fc0d2305",
+      "publication_status": "LOCAL",
+      "elapsed_seconds": 98.59
+    },
+    {
+      "scenario": "key-error",
+      "pipeline_id": "0ac47924-92dd-4d3c-a090-f26613d5cca8",
+      "patch_id": "7c81aa6b-36d7-5d03-a32c-ad056eb6ab14",
+      "rerun_id": "47857cc9-de0b-48ef-aaed-83bd943a8132",
+      "rerun_status": "PASSED",
+      "pull_id": "7ce63475-90d7-414a-a002-aba13cfb8849",
+      "git_commit": "d7a1d32ccfa3932fecc0d216e8cbef500ba54a97",
+      "publication_status": "LOCAL",
+      "elapsed_seconds": 6.09
+    },
+    {
+      "scenario": "context-timeout",
+      "pipeline_id": "4108fa17-c9f9-4764-8d0a-e63b180162d6",
+      "patch_id": "d14f22ee-d82f-5f87-8bef-c1f69cb667d5",
+      "rerun_id": "3ab5d501-df2a-46c0-9d04-c377d2b50020",
+      "rerun_status": "PASSED",
+      "pull_id": "2a70d303-636a-4803-9346-3e6afdd86e3c",
+      "git_commit": "f160ceb80e2f1fe2f79ed6b632a181c255818079",
+      "publication_status": "LOCAL",
+      "elapsed_seconds": 78.58
+    }
+  ]
+}
