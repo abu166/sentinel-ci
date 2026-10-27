@@ -1,0 +1,371 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://sentinel.local/events.schema.json",
+  "title": "SentinelCI topic event contracts",
+  "description": "Durable topic exchange sentinel; durable queues use routing key names. Consumers acknowledge only after durable processing. Publishers use persistent delivery. W3C traceparent and optional tracestate travel in AMQP string headers (not the JSON body); transactional outbox headers persist this context. Baggage and authorization headers are never forwarded.",
+  "oneOf": [
+    {
+      "$ref": "#/$defs/job"
+    },
+    {
+      "$ref": "#/$defs/log"
+    },
+    {
+      "$ref": "#/$defs/trigger"
+    },
+    {
+      "$ref": "#/$defs/result"
+    },
+    {
+      "$ref": "#/$defs/publication"
+    }
+  ],
+  "$defs": {
+    "job": {
+      "type": "object",
+      "properties": {
+        "pipeline_id": {
+          "type": "string",
+          "format": "uuid"
+        },
+        "repo_url": {
+          "type": "string"
+        },
+        "commit_sha": {
+          "type": "string"
+        },
+        "branch": {
+          "type": "string"
+        },
+        "steps": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "string",
+                "format": "uuid"
+              },
+              "name": {
+                "type": "string"
+              },
+              "stage": {
+                "type": "string"
+              },
+              "command": {
+                "type": "string"
+              },
+              "depends_on": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              }
+            },
+            "required": [
+              "id",
+              "name",
+              "stage",
+              "command",
+              "depends_on"
+            ],
+            "additionalProperties": true
+          }
+        },
+        "idempotency_key": {
+          "type": "string"
+        },
+        "commit_message": {
+          "type": "string"
+        },
+        "files": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "string"
+          }
+        },
+        "source_candidate_id": {
+          "type": "string",
+          "format": "uuid",
+          "description": "Reviewed repair candidate revision used by the approval transaction; optional for legacy jobs."
+        }
+      },
+      "required": [
+        "pipeline_id",
+        "repo_url",
+        "commit_sha",
+        "branch",
+        "steps"
+      ],
+      "additionalProperties": true
+    },
+    "log": {
+      "type": "object",
+      "properties": {
+        "pipeline_id": {
+          "type": "string",
+          "format": "uuid"
+        },
+        "step_id": {
+          "type": "string",
+          "format": "uuid"
+        },
+        "sequence_num": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "stream": {
+          "enum": [
+            "stdout",
+            "stderr"
+          ]
+        },
+        "content": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "pipeline_id",
+        "step_id",
+        "sequence_num",
+        "stream",
+        "content"
+      ],
+      "additionalProperties": true
+    },
+    "trigger": {
+      "type": "object",
+      "properties": {
+        "pipeline_id": {
+          "type": "string",
+          "format": "uuid"
+        },
+        "step_id": {
+          "type": "string",
+          "format": "uuid"
+        },
+        "logs": {
+          "type": "string"
+        },
+        "files": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "string"
+          }
+        },
+        "test_command": {
+          "type": "string"
+        },
+        "language": {
+          "enum": [
+            "python",
+            "go"
+          ]
+        }
+      },
+      "required": [
+        "pipeline_id",
+        "step_id",
+        "logs",
+        "files",
+        "test_command",
+        "language"
+      ],
+      "additionalProperties": true
+    },
+    "result": {
+      "type": "object",
+      "properties": {
+        "pipeline_id": {
+          "type": "string",
+          "format": "uuid"
+        },
+        "step_id": {
+          "type": "string",
+          "format": "uuid"
+        },
+        "verification_status": {
+          "enum": [
+            "VERIFIED",
+            "REJECTED"
+          ]
+        },
+        "patch_id": {
+          "type": "string",
+          "format": "uuid"
+        },
+        "selected_candidate_id": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "format": "uuid"
+        },
+        "candidates": {
+          "type": "array",
+          "maxItems": 3,
+          "items": {
+            "$ref": "#/$defs/patchCandidate"
+          }
+        }
+      },
+      "required": [
+        "pipeline_id",
+        "step_id",
+        "verification_status"
+      ],
+      "additionalProperties": true
+    },
+    "publication": {
+      "type": "object",
+      "properties": {
+        "patch_id": {
+          "type": "string",
+          "format": "uuid"
+        },
+        "approved": {
+          "const": true
+        },
+        "open_pr": {
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "patch_id",
+        "approved"
+      ]
+    },
+    "traceHeaders": {
+      "type": "object",
+      "properties": {
+        "traceparent": {
+          "type": "string",
+          "pattern": "^00-[0-9a-f]{32}-[0-9a-f]{16}-[0-9a-f]{2}$"
+        },
+        "tracestate": {
+          "type": "string",
+          "maxLength": 512
+        }
+      },
+      "additionalProperties": false
+    },
+    "patchCandidate": {
+      "type": "object",
+      "required": [
+        "id",
+        "patch_id",
+        "rank",
+        "variant",
+        "ast_cost",
+        "test_success",
+        "score",
+        "test_output",
+        "status",
+        "selected"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "format": "uuid"
+        },
+        "patch_id": {
+          "type": "string",
+          "format": "uuid"
+        },
+        "rank": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 3
+        },
+        "variant": {
+          "type": "string"
+        },
+        "category": {
+          "type": "string"
+        },
+        "file_path": {
+          "type": "string"
+        },
+        "original_code": {
+          "type": "string"
+        },
+        "patched_code": {
+          "type": "string"
+        },
+        "unified_diff": {
+          "type": "string"
+        },
+        "ast_cost": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "test_success": {
+          "type": "boolean"
+        },
+        "score": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1
+        },
+        "test_output": {
+          "type": "string"
+        },
+        "status": {
+          "enum": [
+            "VERIFIED",
+            "REJECTED"
+          ]
+        },
+        "selected": {
+          "type": "boolean"
+        },
+        "diagnostics": {
+          "type": "object",
+          "additionalProperties": true,
+          "properties": {
+            "call_graph": {
+              "type": "object",
+              "description": "Parser-derived functions and same-module helper call edges."
+            },
+            "complexity_delta": {
+              "type": "integer"
+            },
+            "root_cause_analysis": {
+              "type": "string"
+            }
+          }
+        }
+      }
+    }
+  },
+  "x-rabbitmq": {
+    "exchange": "sentinel",
+    "type": "topic",
+    "queues": {
+      "jobs.dispatch": {
+        "durable": true,
+        "routing_key": "jobs.dispatch"
+      },
+      "logs.stream": {
+        "durable": true,
+        "routing_key": "logs.stream"
+      },
+      "healer.trigger": {
+        "durable": true,
+        "routing_key": "healer.trigger",
+        "bindings": [
+          "healer.trigger",
+          "git.publish"
+        ]
+      },
+      "healer.result": {
+        "durable": true,
+        "routing_key": "healer.result"
+      },
+      "healer.dead": {
+        "durable": true,
+        "routing_key": "healer.dead"
+      }
+    }
+  }
+}
