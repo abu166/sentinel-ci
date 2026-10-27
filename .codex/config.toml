@@ -1,0 +1,25 @@
+model_context_window = 1000000
+
+[agents]
+max_threads = 12
+max_depth = 3
+
+[agents.architect]
+description = "System contracts, database migrations, and event schemas"
+config_file = "agents/architect.toml"
+
+[agents.go_backend_worker]
+description = "Go gateway and distributed runner"
+config_file = "agents/go_backend_worker.toml"
+
+[agents.python_healer_worker]
+description = "Python AST localization and verified patch synthesis"
+config_file = "agents/python_healer_worker.toml"
+
+[agents.react_frontend_worker]
+description = "React developer console"
+config_file = "agents/react_frontend_worker.toml"
+
+[agents.adversarial_qa]
+description = "Adversarial tests and integration audits"
+config_file = "agents/adversarial_qa.toml"
