@@ -90,7 +90,7 @@ sequenceDiagram
     participant H as Healer / Git Publisher
     U->>G: Authenticated trigger
     G->>D: Pipeline + snapshot + audit + dispatch outbox (ACID)
-    D->>Q: Relay claims pending event; broker confirms
+    D->>Q: Relay claims pending event and receives broker confirmation
     Q->>R: Deliver job
     R->>R: Renewable lease + unique durable step claim
     R->>R: Nonroot, read-only-root, network-none container
